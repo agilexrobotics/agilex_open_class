@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+
+<robot name="limo_gazebo" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="limo_wheel_transmission" params="wheel_prefix">
+        <transmission name="${wheel_prefix}_wheel_trans" type="SimpleTransmission">
+            <type>transmission_interface/SimpleTransmission</type>
+            <actuator name="${wheel_prefix}_wheel_motor">
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+            <joint name="${wheel_prefix}_wheel">
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            </joint>
+        </transmission>
+    </xacro:macro>
+
+    <xacro:macro name="limo_steering_hinge_transmission" params="wheel_prefix">
+        <transmission name="${wheel_prefix}_wheel_trans" type="SimpleTransmission">
+            <type>transmission_interface/SimpleTransmission</type>
+            <actuator name="${wheel_prefix}_wheel_motor">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+            <joint name="${wheel_prefix}_wheel">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            </joint>
+        </transmission>
+    </xacro:macro>
+
+    <xacro:macro name="gazebo_laser" params="frame_prefix">
+        <gazebo reference="${frame_prefix}_link">
+            <sensor type="ray" name="laser_sensor">
+              <pose>0 0 0 0 0 0</pose>
+              <visualize>false</visualize>
+              <update_rate>8</update_rate>
+              <ray>
+                <scan>
+                  <horizontal>
+                    <samples>720</samples>
+                    <resolution>1</resolution>
+                    <min_angle>-2.09439504</min_angle>
+                    <max_angle>2.09439504</max_angle>
+                  </horizontal>
+                </scan>
+                <range>
+                  <min>0.05</min>
+                  <max>8.0</max>
+                  <resolution>0.01</resolution>
+                </range>
+                <noise>
+                  <type>gaussian</type>
+                  <mean>0.0</mean>
+                  <stddev>0.01</stddev>
+                </noise>
+              </ray>
+            <plugin name="laserscan" filename="libgazebo_ros_ray_sensor.so">
+              <ros>
+                <remapping>~/out:=scan</remapping>
+              </ros>
+              <output_type>sensor_msgs/LaserScan</output_type>
+              <frame_name>laser_link</frame_name>
+            </plugin>
+            </sensor>
+          </gazebo>
+    </xacro:macro>
+
+    <xacro:macro name="gazebo_depth_camera" params="frame_prefix">
+        <gazebo reference="${frame_prefix}_link">
+          <sensor name="sensor_camera" type="depth">
+            <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+            <always_on>true</always_on>
+            <visualize>true</visualize>
+            <update_rate>10.0</update_rate>
+            <!-- <camera name="head">
+              <horizontal_fov>1.3962634</horizontal_fov>
+              <image>
+                  <width>640</width>
+                  <height>480</height>
+                  <format>R8G8B8</format>
+              </image>
+              <clip>
+                  <near>0.02</near>
+                  <far>300</far>
+              </clip>
+            </camera> -->
+
+            <!-- <plugin name="gazebo_ros_depth_camera_sensor" filename="libgazebo_ros_openni_kinect.so">
+              <baseline>0.2</baseline>
+              <alwaysOn>true</alwaysOn>
+
+              <updateRate>0.0</updateRate>
+              <cameraName>camera_ir</cameraName>
+              <imageTopicName>/limo/color/image_raw</imageTopicName>
+              <cameraInfoTopicName>/limo/color/camera_info</cameraInfoTopicName>
+              <depthImageTopicName>/limo/depth/image_raw</depthImageTopicName>
+              <depthImageCameraInfoTopicName>/limo/depth/camera_info</depthImageCameraInfoTopicName>
+              <pointCloudTopicName>/limo/depth/points</pointCloudTopicName>
+              <frameName>depth_link</frameName>
+              <cameraname>depth_camera_link</cameraname>
+              
+              <pointCloudCutoff>0.5</pointCloudCutoff>
+              <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+              <distortionK1>0</distortionK1>
+              <distortionK2>0</distortionK2>
+              <distortionK3>0</distortionK3>
+              <distortionT1>0</distortionT1>
+              <distortionT2>0</distortionT2>
+              <CxPrime>0</CxPrime>
+              <Cx>0</Cx>
+              <Cy>0</Cy>
+              <focalLength>0</focalLength>
+              <hackBaseline>0</hackBaseline>
+            </plugin> -->
+
+          <plugin name="gazebo_ros_depth_camera_sensor" filename="libgazebo_ros_camera.so">
+
+            <ros>
+              <namespace>limo</namespace>
+              <remapping>custom_camera/image_raw:=/limo/color/image_raw</remapping>
+              <remapping>custom_camera/image_depth:=/limo/depth/image_raw</remapping>
+              <remapping>custom_camera/camera_info:=/limo/color/camera_info</remapping>
+              <remapping>custom_camera/camera_info_depth:=/limo/depth/camera_info</remapping>
+              <remapping>custom_camera/points:=/limo/depth/points</remapping>
+            </ros>
+
+            <!-- Set camera name. If empty, defaults to sensor name (i.e. "sensor_name") -->
+            <camera_name>limo</camera_name>
+
+            <!-- Set TF frame name. If empty, defaults to link name (i.e. "link_name") -->
+            <frame_name>depth_link</frame_name>
+
+            <hack_baseline>0.07</hack_baseline>
+
+            <!-- No need to repeat distortion parameters or to set autoDistortion -->
+
+             <min_depth>0.001</min_depth>
+             <max_depth>300.0</max_depth>
+          </plugin>
+
+
+
+
+        </sensor>
+          </gazebo>
+    </xacro:macro>
+<!-- 
+    <xacro:macro name="gazebo_imu" params="frame_prefix">
+      <gazebo reference="${frame_prefix}_link">
+        <sensor name="imu_sensor" type="imu">
+          <always_on>true</always_on>
+          <update_rate>100</update_rate>
+        <plugin name="my_imu_plugin" filename="libgazebo_ros_imu_sensor.so">
+              <ros>
+                <namespace>/imu</namespace>
+                <remapping>/imu</remapping>
+              </ros>
+            <frame_name>imu_link</frame_name>
+            </plugin>
+
+          <pose>0 0 0 0 0 0</pose>
+        </sensor>
+      </gazebo>
+  </xacro:macro> -->
+</robot>
