@@ -24,18 +24,18 @@ include_directories(
   include
 )
 
-add_executable(server_cmd src/server_cmd.cpp)
+add_executable(limo_server src/limo_server.cpp)
 ament_target_dependencies(
-    server_cmd
+    limo_server
     geometry_msgs
     rclcpp
     limo_msgs
     example_interfaces
 )
 
-add_executable(server_client src/server_client.cpp)
+add_executable(limo_client src/limo_client.cpp)
 ament_target_dependencies(
-    server_client
+    limo_client
     geometry_msgs
     rclcpp
     limo_msgs
@@ -62,9 +62,9 @@ ament_target_dependencies(
     limo_msgs
     example_interfaces
 )
-add_executable(topic_cmd src/topic_cmd.cpp)
+add_executable(limo_topic_cmd src/limo_topic_cmd.cpp)
 ament_target_dependencies(
-    topic_cmd
+  limo_topic_cmd
     geometry_msgs
     nav_msgs
     rclcpp
@@ -82,11 +82,11 @@ ament_target_dependencies(
     tf2
 )
 install(TARGETS
-  server_cmd
-  server_client
+  limo_server
+  limo_client
   limo_action_server
   limo_action_client
-  topic_cmd
+  limo_topic_cmd
   listen_tf
   DESTINATION
  lib/${PROJECT_NAME})
