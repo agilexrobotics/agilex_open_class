@@ -7,7 +7,6 @@
 #include <std_msgs/msg/bool.hpp>
 #include <limo_msgs/action/limo_action.hpp>
 
-
 using namespace std;
 using namespace std::placeholders;
 // 定义一个LimoActionClient类，继承自rclcpp::Node

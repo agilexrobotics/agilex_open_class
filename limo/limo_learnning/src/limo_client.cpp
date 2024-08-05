@@ -35,7 +35,7 @@ int main(int argc, char **argv)
   if (rclcpp::spin_until_future_complete(node, result) ==
     rclcpp::FutureReturnCode::SUCCESS)
   {
-    RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "success.data: %d", result.get()->success.data);
+    RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "success.data: %d", result.get()->success);
   } else {
     RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed to call service limo_srv");
   }

@@ -48,7 +48,7 @@ void limo_srv(
         // 输出日志信息，提示已经完成话题发布  
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Publishing: linear.x: %f, angular.z: %f", 
                 vel_cmd.linear.x, vel_cmd.angular.z);           
-        response->success.data = true;
+        response->success = true;
         break;
     }
     count++;                       
@@ -57,7 +57,7 @@ void limo_srv(
   RCLCPP_INFO(rclcpp::get_logger("rclcpp"),"request->x: %lf",request->x);
   RCLCPP_INFO(rclcpp::get_logger("rclcpp"),"request->y: %lf",request->y);
   RCLCPP_INFO(rclcpp::get_logger("rclcpp"),"request->z: %lf",request->z);
-  RCLCPP_INFO(rclcpp::get_logger("rclcpp"),"response->success.data: %d",response->success.data);
+  RCLCPP_INFO(rclcpp::get_logger("rclcpp"),"response->success.data: %d",response->success);
 
 }
   }
