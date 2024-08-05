@@ -1,8 +1,6 @@
-[TOC]
+# LIMO环境配置过程
 
-# Limo Simulation Operation Process
-
-## 1.	Introduction of Function Package
+## 1.	功能包介绍
 
 ```
 ├── image
@@ -10,184 +8,171 @@
 ├── limo_gazebo_sim
 ```
 
-​	limo_description: The file is the function package of model file
+​	limo_description: 模型描述文件功能包
 
-​	limo_gazebo_sim: The folder is gazebo simulation function package
+​	limo_gazebo_sim: gazebo仿真启动功能包
 
-## 2.	Environment
+## 2.	使用环境
 
 ### Development Environment
 
-​	ubuntu 18.04 + [ROS Melodic desktop full](http://wiki.ros.org/melodic/Installation/Ubuntu)
+​	ubuntu 22.04 + [RO2 humble desktop full](http://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html)
 
-### Download and install required function package
+### 需要下载的功能包
 
-​	Download and install ros-control function package, ros-control is the robot control middleware provided by ROS
-
-```
-sudo apt-get install ros-melodic-ros-control
-```
-
-​	Download and install ros-controllers function package, ros-controllers are the kinematics plug-in of common models provided by ROS
+​	下载安装gazebo相关的依赖和gazebo-ros-control等功能包；gazebo-ros是gazebo与ROS之间的通信接口，连接ROS与Gazebo
 
 ```
-sudo apt-get install ros-melodic-ros-controllers
+sudo apt-get install ros-humble-gazebo-*
 ```
 
-​	Download and install gazebo-ros function package, gazebo-ros is the communication interface between gazebo and ROS, and connect the ROS and Gazebo
+​	下载并安装 joint-state-publisher-gui joint-state-publisher 。这两个功能包是用于发布关节信息的
 
 ```
-sudo apt-get install ros-melodic-gazebo-ros
+sudo apt-get install ros-humble-joint-state-publisher ros-humble-joint-state-publisher-gui
 ```
 
-​	Download and install gazebo-ros-control function package, gazebo-ros-control is the communication standard controller between ROS and Gazebo
+​	下载并安装diff-drive-controller；diff-drive-controller是用于控制车子的gazebo插件
 
 ```
-sudo apt-get install ros-melodic-gazebo-ros-control
+sudo apt-get install ros-humble-diff-drive-controller
 ```
 
-​	Download and install joint-state-publisher-gui package.This package is used to visualize the joint control.
+​	下载并安装control相关的依赖和功能包；control用于定义模型关节的类型
 
 ```
-sudo apt-get install ros-melodic-joint-state-publisher-gui 
+sudo apt-get install ros-humble-control-*
 ```
 
-​	Download and install rqt-robot-steering plug-in, rqt_robot_steering is a ROS tool closely related to robot motion control, it can send the control command of robot linear motion and steering motion, and the robot motion can be easily controlled through the sliding bar
+​	下载并安装键盘控制节点
 
 ```
-sudo apt-get install ros-melodic-rqt-robot-steering 
-```
-
-​	Download and install teleop-twist-keyboard function package, telop-twist-keyboard is keyboard control function package, the robot can be controlled to move forward, left, right and backward through "i", "j", "l",and "," on the keyboard
-
-```
-sudo apt-get install ros-melodic-teleop-twist-keyboard 
+sudo apt-get install ros-humble-teleop-twist-keyboard 
 ```
 
 
 
-## 3.	About Usage
+## 3.	使用方法
 
-### 1.	Create workspace, download simulation model function package and compile
+### 1.	创建工作空间并下载代码
 
-​		Open a new terminal and create a workspace named limo_ws, enter in the terminal:
-
-```
-mkdir limo_ws
-```
-
-​		Enter the limo_ws folder
+​	在终端中创建一个名为agilex_open_class的文件夹:
 
 ```
-cd limo_ws
+mkdir agilex_open_class
 ```
 
-​		Create a folder to store function package named src
+​	进入agilex_open_class文件夹
+
+```
+cd agilex_open_class
+```
+
+​	在创建一个src
+
 ```
 mkdir src
 ```
 
-​		Enter the src folder
+​	进入src
 
 ```
 cd src
 ```
 
-​		Initialize folder
+​	下载仿真代码
 
 ```
-catkin_init_workspace
+git clone https://github.com/agilexrobotics/agilex_open_class.git
 ```
 
-​		Download simulation model function package
+​	进入agilex_open_class文件夹
 
 ```
-git clone https://github.com/agilexrobotics/ugv_sim.git
+cd agilex_open_class
 ```
 
-​		Enter the limo_ws folder
+​	检查一下是否缺少依赖
 
 ```
-cd limo_ws
+rosdep install -i --from-path src --rosdistro humble -y
 ```
 
-​		Confirm whether the dependency of the function package is installed
+​	单独编译limo_msgs文件
 
 ```
-rosdep install --from-paths src --ignore-src -r -y 
+colcon build --packages-select limo_msgs
 ```
 
-​	Compile
+​	在编译全部代码
 
 ```
-catkin_make
+colcon build
 ```
 
 
 
-### 2.	Run the star file of limo model and visualize the urdf file in Rviz
+### 2.	启动limo 模型并在Rviz中可视化
 
-​	Enter the limo_ws folder
-
-```
-cd limo_ws
-```
-
-​	Declare the environment variable
+​	进入agilex_open_class文件
 
 ```
-source devel/setup.bash
+cd agilex_open_class
 ```
 
-​	Run the start file of limo and visualize the model in Rviz
-
-```
-roslaunch limo_description display_models.launch 
-```
-
-![img](image/rviz.png) 
-
-### 3.	Start the gazebo simulation environment of limo and control limo movement in the gazebo
-
-​	Enter the limo_ws folder
-
-```
-cd limo_ws
-```
-
-​	Declare the environment variable
+​	声明工作空间的环境变量
 
 ```
 source devel/setup.bash
 ```
 
-​	Start the simulation environment of limo, limo have two movement mode, the movement mode is Ackerman mode
+​	声明gazebo的环境变量	
 
 ```
-roslaunch limo_gazebo_sim limo_ackerman.launch
+source /usr/share/gazebo/setup.bash
 ```
 
-​	Start rqt_robot_steering movement control plug-in, the sliding bar can control the robot motion
+​	运行指令，在Rviz中可视化模型
 
 ```
-rosrun rqt_robot_steering rqt_robot_steering
+ ros2 launch limo_description display_limo_diff.launch.py 
 ```
 
-![img](image/limo_ackerman.png) 
+![img](../../../手册/agilex_open_class/limo/image/rviz.png) 
 
-Four-wheel differential steering movement mode
+### 3.	启动limo Gazebo仿真
+
+​	进入agilex_open_class文件
 
 ```
-roslaunch limo_gazebo_sim limo_four_diff.launch 
+cd agilex_open_class
 ```
 
-Control by keyboard, the robot can be controlled to move forward, left, right and backward through "i", "j", "l",and "," on the keyboard
+​	声明工作空间的环境变量
+
+```
+source devel/setup.bash
+```
+
+​	声明gazebo的环境变量	
+
+```
+source /usr/share/gazebo/setup.bash
+```
+
+​	启动仿真，使用四轮差速模式
+
+```
+ros2 launch limo_gazebo_sim limo_diff_empty_world.launch.py 
+```
+
+启动键盘控制节点
 
 ```
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py 
 ```
 
-![img](image/limo_diff.png) 
+![img](../../../手册/agilex_open_class/limo/image/limo_diff.png) 
 
  
 
