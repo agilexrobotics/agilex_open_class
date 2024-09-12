@@ -9,7 +9,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 def generate_launch_description():
 
     gazebo_world_path = os.path.join(
-        get_package_share_directory('limo_gazebo_sim'), 'world', 'house.world')
+        get_package_share_directory('limo_gazebo_sim'), 'worlds', 'world_v1.world')
 
     gazebo_options_dict = {
         'world': gazebo_world_path,

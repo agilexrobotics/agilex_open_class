@@ -18,8 +18,10 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2 REQUIRED)
-
-
+find_package(sensor_msgs REQUIRED)
+find_package(nav2_msgs REQUIRED)
+find_package(visualization_msgs REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 include_directories(
   include
 )
@@ -81,6 +83,80 @@ ament_target_dependencies(
     tf2_ros
     tf2
 )
+
+add_executable(limo_scan src/limo_scan.cpp)
+ament_target_dependencies(
+  limo_scan
+    geometry_msgs
+    rclcpp
+    example_interfaces
+    sensor_msgs
+)
+
+add_executable(limo_scan_nav src/limo_scan_nav.cpp)
+ament_target_dependencies(
+  limo_scan_nav
+    geometry_msgs
+    rclcpp
+    example_interfaces
+    sensor_msgs
+    rclcpp_action
+    nav2_msgs
+)
+
+add_executable(multi_goal_nav src/multi_goal_nav.cpp)
+ament_target_dependencies(
+  multi_goal_nav
+    geometry_msgs
+    rclcpp
+    example_interfaces
+    sensor_msgs
+    tf2_ros
+    tf2
+    nav2_msgs
+    visualization_msgs
+)
+
+add_executable(explore src/explore.cpp)
+ament_target_dependencies(
+  explore
+    geometry_msgs
+    rclcpp
+    example_interfaces
+    sensor_msgs
+    tf2_ros
+    tf2
+    nav2_msgs
+    visualization_msgs
+)
+
+add_executable(record_path src/record_path.cpp)
+ament_target_dependencies(
+  record_path
+    geometry_msgs
+    rclcpp
+    example_interfaces
+    sensor_msgs
+    tf2_ros
+    tf2
+    nav2_msgs
+    tf2_geometry_msgs
+)
+
+add_executable(follow_path src/follow_path.cpp)
+ament_target_dependencies(
+  follow_path
+    geometry_msgs
+    rclcpp
+    example_interfaces
+    sensor_msgs
+    tf2_ros
+    tf2
+    nav2_msgs
+    tf2_geometry_msgs
+)
+
+
 install(TARGETS
   limo_server
   limo_client
@@ -88,6 +164,12 @@ install(TARGETS
   limo_action_client
   limo_topic_cmd
   listen_tf
+  limo_scan
+  limo_scan_nav
+  multi_goal_nav
+  explore
+  record_path
+  follow_path
   DESTINATION
  lib/${PROJECT_NAME})
 

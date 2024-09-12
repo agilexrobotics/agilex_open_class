@@ -37,7 +37,9 @@ def generate_launch_description():
             #     'use_sim_time': True,
             #     'robot_description': Command(
             #         [f'xacro {urdf_file}', ' robot_name:=', LaunchConfiguration('robot_name')])
-            parameters=[{'robot_description': launch_ros.descriptions.ParameterValue( launch.substitutions.Command([
+            parameters=[{
+                        'use_sim_time': True,
+                        'robot_description': launch_ros.descriptions.ParameterValue( launch.substitutions.Command([
                         'xacro ',os.path.join(pkg_share,urdf_file)]), value_type=str)  }]
             ),
         Node(

@@ -24,7 +24,10 @@ setup(
             "limo_server = limo_learnning_py.limo_server:main",
             "limo_client = limo_learnning_py.limo_client:main",
             "limo_action_server = limo_learnning_py.limo_action_server:main",
-            "limo_action_client = limo_learnning_py.limo_action_client:main"
+            "limo_action_client = limo_learnning_py.limo_action_client:main",
+            "limo_scan = limo_learnning_py.limo_scan:main",
+            "multi_goal_nav = limo_learnning_py.multi_goal_nav:main"
+
         ],
     },
 )
