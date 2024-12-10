@@ -42,13 +42,23 @@ ros2 launch piper_moveit_config_v5 demo.launch.py
 
 
 
+## 4、启动Gazebo仿真
 
+1）启动Gazebo仿真
 
+```
+ros2 launch piper_description piper_gazebo.launch.py
+```
 
+![](image/piper_gazebo.png)
 
+2）使用moveit2，控制机械臂
 
+> 注：有时候会出现moveit控制不了gazebo模型的情况，需要重新启动
 
+```
+ros2 launch piper_moveit_config_v4 demo.launch.py
+```
 
-
-
+![](image/piper_gazebo_moveit.png)
 

@@ -31,7 +31,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/base_link.STL" />
+          filename="file://$(find piper_description)/meshes/base_link.STL" />
       </geometry>
       <material
         name="">
@@ -45,7 +45,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/base_link.STL" />
+          filename="file://$(find piper_description)/meshes/base_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -71,7 +71,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link1.STL" />
+          filename="file://$(find piper_description)/meshes/link1.STL" />
       </geometry>
       <material
         name="">
@@ -85,7 +85,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link1.STL" />
+          filename="file://$(find piper_description)/meshes/link1.STL" />
       </geometry>
     </collision>
   </link>
@@ -129,7 +129,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link2.STL" />
+          filename="file://$(find piper_description)/meshes/link2.STL" />
       </geometry>
       <material
         name="">
@@ -143,7 +143,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link2.STL" />
+          filename="file://$(find piper_description)/meshes/link2.STL" />
       </geometry>
     </collision>
   </link>
@@ -187,7 +187,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link3.STL" />
+          filename="file://$(find piper_description)/meshes/link3.STL" />
       </geometry>
       <material
         name="">
@@ -201,7 +201,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link3.STL" />
+          filename="file://$(find piper_description)/meshes/link3.STL" />
       </geometry>
     </collision>
   </link>
@@ -245,7 +245,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link4.STL" />
+          filename="file://$(find piper_description)/meshes/link4.STL" />
       </geometry>
       <material
         name="">
@@ -259,7 +259,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link4.STL" />
+          filename="file://$(find piper_description)/meshes/link4.STL" />
       </geometry>
     </collision>
   </link>
@@ -303,7 +303,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link5.STL" />
+          filename="file://$(find piper_description)/meshes/link5.STL" />
       </geometry>
       <material
         name="">
@@ -317,7 +317,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link5.STL" />
+          filename="file://$(find piper_description)/meshes/link5.STL" />
       </geometry>
     </collision>
   </link>
@@ -361,7 +361,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link6.STL" />
+          filename="file://$(find piper_description)/meshes/link6.STL" />
       </geometry>
       <material
         name="">
@@ -375,7 +375,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link6.STL" />
+          filename="file://$(find piper_description)/meshes/link6.STL" />
       </geometry>
     </collision>
   </link>
@@ -420,7 +420,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link7.STL" />
+          filename="file://$(find piper_description)/meshes/link7.STL" />
       </geometry>
       <material
         name="">
@@ -434,7 +434,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link7.STL" />
+          filename="file://$(find piper_description)/meshes/link7.STL" />
       </geometry>
     </collision>
   </link>
@@ -479,7 +479,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link8.STL" />
+          filename="file://$(find piper_description)/meshes/link8.STL" />
       </geometry>
       <material
         name="">
@@ -493,7 +493,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://piper_description/meshes/link8.STL" />
+          filename="file://$(find piper_description)/meshes/link8.STL" />
       </geometry>
     </collision>
   </link>
@@ -516,7 +516,7 @@
       velocity="1" />
   </joint>
 
-<!-- 
+
     <ros2_control name="GazeboSystem" type="system">
         <hardware>
             <plugin>gazebo_ros2_control/GazeboSystem</plugin>
@@ -626,12 +626,12 @@
             <state_interface name="velocity"/>
             <state_interface name="effort"/>
         </joint>
-    </ros2_control> -->
+    </ros2_control>
 
-<!-- gazebo 
+<!-- gazebo -->
   <gazebo>
       <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-        <parameters> $(find piper_description)/config/joint_names_piper_description.yaml </parameters>
+        <parameters> /home/agilex/agilex_open_class/src/agilex_open_class/piper/piper_description/config/joint_name_piper_description.yaml </parameters>
     </plugin>
-  </gazebo>-->
+  </gazebo>
 </robot>
